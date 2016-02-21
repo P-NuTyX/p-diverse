@@ -1,0 +1,49 @@
+# Description:  A small utility to modify the dynamic linker and RPATH of ELF executables
+# URL:          http://nixos.org/patchelf.html
+# Maintainers:  peter1000 <https://github.com/peter1000>
+# Packagers:    peter1000 <https://github.com/peter1000>
+# Depends on:   git
+
+name=patchelf
+version=0.8.r81.dd299dc
+release=1
+
+_source=https://github.com/NixOS/$name.git
+source=()
+
+version() {
+    cur_prefix=''
+    if git_version=$( git describe --long --tags 2>/dev/null ); then
+        local _tag_stripped="$(git describe --abbrev=0 --tags | sed 's/^'${cur_prefix}'//;s/-/./g')"
+        local _rev="$(($(git rev-list --count HEAD)-$(git rev-list --count $(git describe --abbrev=0 --tags))))"
+        printf "\n\n>>>USED GIT VERSION: ${_tag_stripped}.r${_rev}.%s\n\n" "$(git rev-parse --short HEAD)"
+    else
+        printf "\n\n>>>USED GIT VERSION: r%s.%s\n\n" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+    fi
+}
+
+
+build() {
+    # Get the source repo
+    if [ -d $PKGMK_SOURCE_DIR/$name ];then
+        # Update the repo into $name folder
+        cd $PKGMK_SOURCE_DIR/$name && git pull
+    else
+        # Clone the repo into $name folder
+        git clone $_source $PKGMK_SOURCE_DIR/$name
+    fi
+
+    cp -r $PKGMK_SOURCE_DIR/$name $SRC/$name
+    cd $SRC/$name
+
+    # Check out a specified commit
+    #git checkout 91e8857
+    
+    # Print the version: should be added to the variable: `version` at the top of the file.
+    version
+
+    ./bootstrap.sh
+    ./configure --prefix=/usr
+    make
+    make DESTDIR=$PKG install
+}
