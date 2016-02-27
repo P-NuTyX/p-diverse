@@ -8,8 +8,7 @@ name=linux-helper-install-scripts
 version=1.0.0.r0.5ba6249
 release=1
 
-_source=https://github.com/peter1000/$name.git
-source=()
+source=(git+https://github.com/peter1000/$name.git)
 
 version() {
     cur_prefix='v'
@@ -24,21 +23,8 @@ version() {
 
 
 build() {
-    # Get the source repo
-    if [ -d $PKGMK_SOURCE_DIR/$name ];then
-        # Update the repo into $name folder
-        cd $PKGMK_SOURCE_DIR/$name && git pull
-    else
-        # Clone the repo into $name folder
-        git clone $_source $PKGMK_SOURCE_DIR/$name
-    fi
-
-    cp -r $PKGMK_SOURCE_DIR/$name $SRC/$name
     cd $SRC/$name
 
-    # Check out a specified commit
-    #git checkout 91e8857
-    
     # Print the version: should be added to the variable: `version` at the top of the file.
     version
 

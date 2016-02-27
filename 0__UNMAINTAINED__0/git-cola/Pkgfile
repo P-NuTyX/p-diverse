@@ -10,8 +10,7 @@ name=git-cola
 version=2.5.r115.c3ca0bf
 release=1
 
-_source=https://github.com/git-cola/$name.git
-source=()
+source=(git+https://github.com/git-cola/$name.git)
 
 version() {
     cur_prefix='v'
@@ -26,28 +25,17 @@ version() {
 
 
 build() {
-    
-    # Get the source repo
-    if [ -d $PKGMK_SOURCE_DIR/$name ];then
-        # Update the repo into $name folder
-        cd $PKGMK_SOURCE_DIR/$name && git pull
-    else
-        # Clone the repo into $name folder
-        git clone $_source $PKGMK_SOURCE_DIR/$name
-    fi
-
-    cp -r $PKGMK_SOURCE_DIR/$name $SRC/$name
     cd $SRC/$name
-    
+
     # Print the version: should be added to the variable: `version` at the top of the file.
     version
 
     # export python3
     #export PYTHON=python2
-    
+
 	#make all man
     #make DESTDIR=$PKG install{,-man}
-    
+
     make all
     #make test
     make prefix=/usr DESTDIR=$PKG install

@@ -1,3 +1,0 @@
-1456098381#.cards.tar.xz#1.0.0.r0.5ba6249#1#A small utility to modify the dynamic linker and RPATH of ELF executables#http://nixos.org/patchelf.html#peter1000 <https://github.com/peter1000>#peter1000 <https://github.com/peter1000>
-6927cc0b0dcc694f56b885aaed4609ce#patchelf#x86_64
-9fad63514f4d969f3eda2b879b4147d3#Pkgfile
