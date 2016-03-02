@@ -12,14 +12,15 @@ release=1
 
 source=(git+https://github.com/git-cola/$name.git)
 
-version() {
+setversion() {
+    cd $SRC/$name
     cur_prefix='v'
     if git_version=$( git describe --long --tags 2>/dev/null ); then
         local _tag_stripped="$(git describe --abbrev=0 --tags | sed 's/^'${cur_prefix}'//;s/-/./g')"
         local _rev="$(($(git rev-list --count HEAD)-$(git rev-list --count $(git describe --abbrev=0 --tags))))"
-        printf "\n\n>>>USED GIT VERSION: ${_tag_stripped}.r${_rev}.%s\n\n" "$(git rev-parse --short HEAD)"
+        printf "${_tag_stripped}.r${_rev}.%s" "$(git rev-parse --short HEAD)"
     else
-        printf "\n\n>>>USED GIT VERSION: r%s.%s\n\n" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+        printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
     fi
 }
 
@@ -27,16 +28,13 @@ version() {
 build() {
     cd $SRC/$name
 
-    # Print the version: should be added to the variable: `version` at the top of the file.
-    version
-
     # export python3
     #export PYTHON=python2
 
 	#make all man
     #make DESTDIR=$PKG install{,-man}
 
-    make all
+    make all man
     #make test
-    make prefix=/usr DESTDIR=$PKG install
+    make prefix=/usr DESTDIR=$PKG install{,-man}
 }

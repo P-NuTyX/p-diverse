@@ -5,31 +5,27 @@
 # Depends on:   git
 
 name=linux-helper-install-scripts
-version=1.0.0.r0.5ba6249
+version=1.0.0.r0.5ba6249      # previous: v1.0.0.r0.5ba6249
 release=1
 
 source=(git+https://github.com/peter1000/$name.git)
 
-version() {
+setversion() {
+    cd $SRC/$name
     cur_prefix='v'
     if git_version=$( git describe --long --tags 2>/dev/null ); then
         local _tag_stripped="$(git describe --abbrev=0 --tags | sed 's/^'${cur_prefix}'//;s/-/./g')"
         local _rev="$(($(git rev-list --count HEAD)-$(git rev-list --count $(git describe --abbrev=0 --tags))))"
-        printf "\n\n>>>USED GIT VERSION: ${_tag_stripped}.r${_rev}.%s\n\n" "$(git rev-parse --short HEAD)"
+        printf "${_tag_stripped}.r${_rev}.%s" "$(git rev-parse --short HEAD)"
     else
-        printf "\n\n>>>USED GIT VERSION: r%s.%s\n\n" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+        printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
     fi
 }
 
 
 build() {
     cd $SRC/$name
-
-    # Print the version: should be added to the variable: `version` at the top of the file.
-    version
-
     make
     make check
-    
     make PREFIX=/usr DESTDIR=$PKG install
 }

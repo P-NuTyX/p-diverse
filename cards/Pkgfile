@@ -1,0 +1,46 @@
+# Description:  A set of utilities to manage software packages on NuTyX distribution.
+# URL:          https://github.com/NuTyX/cards
+# Maintainer:   peter1000 <https://github.com/peter1000>
+# Packager:     peter1000 <https://github.com/peter1000>, tnut at nutyx dot org
+# Depends on:   git
+
+PKGMK_IGNORE_RUNTIMEDEPS="no"
+PKGMK_GROUPS=(devel doc man)
+name=cards
+version=1.99.7     # previous: 1.99.7
+release=1
+
+source=(git+https://github.com/NuTyX/cards)
+
+setversion() {
+    cd $SRC/$name
+    cur_prefix='cards.'
+    if git_version=$( git describe --long --tags 2>/dev/null ); then
+        local _tag_stripped="$(git describe --abbrev=0 --tags | sed 's/^'${cur_prefix}'//;s/-/./g')"
+        local _rev="$(($(git rev-list --count HEAD)-$(git rev-list --count $(git describe --abbrev=0 --tags))))"
+        printf "${_tag_stripped}.r${_rev}.%s" "$(git rev-parse --short HEAD)"
+    else
+        printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+    fi
+}
+
+
+build() {
+    cd $SRC/$name
+
+    make all
+    make DESTDIR=$PKG install
+    mkdir -p $PKG/{etc,usr}/ports
+}
+
+devel() {
+    cd $PKG
+    bsdtar -cf \
+        $PKGMK_PACKAGE_DIR/$name.devel${PKGMK_BUILDVER}${PKGMK_ARCH}.$PKGMK_PACKAGE_EXT \
+        usr/bin \
+        usr/ports \
+        var \
+        etc/ports \
+        etc/pkgmk.conf.example
+    rm -rf var usr/bin usr/ports etc/pkgmk.conf.example etc/ports 
+}

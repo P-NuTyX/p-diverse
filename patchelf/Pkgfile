@@ -5,29 +5,26 @@
 # Depends on:   git
 
 name=patchelf
-version=0.8.r88.65a4dc6
+version=0.8.r81.dd299dc      # previous: 0.8.r88.65a4dc6
 release=1
 
 source=(git+https://github.com/NixOS/$name.git)
 
-version() {
+setversion() {
+    cd $SRC/$name
     cur_prefix=''
     if git_version=$( git describe --long --tags 2>/dev/null ); then
         local _tag_stripped="$(git describe --abbrev=0 --tags | sed 's/^'${cur_prefix}'//;s/-/./g')"
         local _rev="$(($(git rev-list --count HEAD)-$(git rev-list --count $(git describe --abbrev=0 --tags))))"
-        printf "\n\n>>>USED GIT VERSION: ${_tag_stripped}.r${_rev}.%s\n\n" "$(git rev-parse --short HEAD)"
+        printf "${_tag_stripped}.r${_rev}.%s" "$(git rev-parse --short HEAD)"
     else
-        printf "\n\n>>>USED GIT VERSION: r%s.%s\n\n" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+        printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
     fi
 }
 
 
 build() {
     cd $SRC/$name
-
-    # Print the version: should be added to the variable: `version` at the top of the file.
-    version
-
     ./bootstrap.sh
     ./configure --prefix=/usr
     make

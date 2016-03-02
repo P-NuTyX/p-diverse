@@ -1,0 +1,4 @@
+1456951472#.cards.tar.xz#1.0.4#1#A tool to convert RPM files to TAR.GZ files.#http://www.crux.nu/#peter1000 <https://github.com/peter1000>#peter1000 <https://github.com/peter1000>, Fredrik Rinnestam, fredrik at crux dot nu
+6cd4bad3c11a569b2dd8a5d14712d5cb#rpm2targz#x86_64
+8341044e13ddead93295d57f5853ab00#rpm2targz
+7f21c1864515b44bf20f2f7f4cd6b63b#Pkgfile
