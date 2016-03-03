@@ -1,5 +1,5 @@
-# Description:  A set of utilities to manage software packages on NuTyX distribution.
-# URL:          https://github.com/NuTyX/cards
+# Description:  Package Management Utilities for NuTyX-Linux (development repo of peter1000)
+# URL:          https://github.com/P-NuTyX/p-cards
 # Maintainer:   peter1000 <https://github.com/peter1000>
 # Packager:     peter1000 <https://github.com/peter1000>, tnut at nutyx dot org
 # Depends on:   git
@@ -7,14 +7,14 @@
 PKGMK_IGNORE_RUNTIMEDEPS="no"
 PKGMK_GROUPS=(devel doc man)
 name=cards
-version=1.99.7     # previous: 1.99.7
+version=1.99.7.r1.7c48af2      # previous: 1.99.7.r0.4412b5a
 release=1
 
-source=(git+https://github.com/NuTyX/cards)
+source=(cards::git+https://github.com/P-NuTyX/p-cards.git)
 
 setversion() {
     cd $SRC/$name
-    cur_prefix='cards.'
+    cur_prefix='v'
     if git_version=$( git describe --long --tags 2>/dev/null ); then
         local _tag_stripped="$(git describe --abbrev=0 --tags | sed 's/^'${cur_prefix}'//;s/-/./g')"
         local _rev="$(($(git rev-list --count HEAD)-$(git rev-list --count $(git describe --abbrev=0 --tags))))"

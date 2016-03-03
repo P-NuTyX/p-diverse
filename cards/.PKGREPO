@@ -1,7 +1,7 @@
-1456951205#.cards.tar.xz#1.99.7.r95.0742762#1#A set of utilities to manage software packages on NuTyX distribution.#https://github.com/NuTyX/cards#peter1000 <https://github.com/peter1000>#peter1000 <https://github.com/peter1000>, tnut at nutyx dot org
-f450da56ac0e7dad315d99664471872f#cards#x86_64
-8df88daa6dfc6cc28806ca20b348b4b0#cards.devel#x86_64
-f64ed1ef54913821334240b08afec303#cards.man#any
+1456974261#.cards.tar.xz#1.99.7.r1.7c48af2#1#Package Management Utilities for NuTyX-Linux (development repo of peter1000)#https://github.com/P-NuTyX/p-cards#peter1000 <https://github.com/peter1000>#peter1000 <https://github.com/peter1000>, tnut at nutyx dot org
+049ea9790f370b83bc1aef54fc94038d#cards.devel#x86_64
+8072896e5a5c3c53a6602e2933afdcea#cards#x86_64
+29136253f1653338e6f62e81f673215c#cards.man#any
 55b079f214e82561d1d4286680e07e02#cards.devel.post-install
 0be512dc38054c7951c87e06f46f8bf8#cards.devel.run
-3bc54d6aa3e1162b05181d5b0f612d4c#Pkgfile
+d70cb998f0f8ab7b1572b14b7e486c9a#Pkgfile
