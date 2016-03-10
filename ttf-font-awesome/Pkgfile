@@ -1,0 +1,32 @@
+# Description:  The iconic font and CSS toolkit
+# URL:          https://github.com/FortAwesome/Font-Awesome/
+# Maintainers:  peter1000 <https://github.com/peter1000>
+# Packagers:    peter1000 <https://github.com/peter1000>
+# Depends on:   git xorg-fontconfig xorg-font-util
+
+run=(xorg-fontconfig xorg-font-util)
+
+name=ttf-font-awesome
+version=4.5.0.r28.adcbe8e
+release=1
+
+source=($name::git+https://github.com/FortAwesome/Font-Awesome.git)
+
+setversion() {
+    cd $SRC/$name
+    cur_prefix='v'
+    if git_version=$( git describe --long --tags 2>/dev/null ); then
+        local _tag_stripped="$(git describe --abbrev=0 --tags | sed 's/^'${cur_prefix}'//;s/-/./g')"
+        local _rev="$(($(git rev-list --count HEAD)-$(git rev-list --count $(git describe --abbrev=0 --tags))))"
+        printf "${_tag_stripped}.r${_rev}.%s" "$(git rev-parse --short HEAD)"
+    else
+        printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+    fi
+}
+
+
+build() {
+    cd $SRC/$name/fonts
+    install -d $PKG/usr/share/fonts/TTF/
+    install -m644 *.ttf $PKG/usr/share/fonts/TTF/
+}
