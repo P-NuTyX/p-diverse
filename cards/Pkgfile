@@ -8,7 +8,7 @@ PKGMK_IGNORE_RUNTIMEDEPS="no"
 PKGMK_GROUPS=(devel doc man)
 # Rename the package to cards
 name=cards
-version=r370.917aaa4
+version=r372.db0a8e7      # previous: r370.917aaa4
 release=1
 
 source=(cards::git+https://github.com/P-Linux/p_cards.git)

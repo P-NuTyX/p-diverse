@@ -1,0 +1,16 @@
+# Description:  A library for emulating x86.
+# URL:          http://www.opensuse.org/
+# Maintainers:  peter1000 <https://github.com/peter1000>
+# Packagers:    peter1000 <https://github.com/peter1000>
+
+name=libx86emu
+version=1.6
+release=1
+source=(http://download.opensuse.org/source/factory/repo/oss/suse/src/$name-$version-1.1.src.rpm)
+
+build() {
+    bsdtar -xf libx86emu-1.6.tar.xz
+    cd $name-$version
+    make LIBDIR=/usr/lib
+    make LIBDIR=/usr/lib DESTDIR=$PKG install
+}
